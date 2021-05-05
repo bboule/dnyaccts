@@ -1,0 +1,77 @@
+opsmx:
+ access-key: '{cipher}<ENCRYPTED_AWS_ACCESS_KEY>'
+ secret-key: '{cipher}<ENCRYPTED_AWS_SECRET_KEY>'
+aws:
+  enabled: true
+  lambda:
+   enabled: true
+  accounts:
+  - name: my-aws-ec2-account
+    lambdaEnabled: true
+    requiredGroupMembership: []
+    providerVersion: V1
+    permissions: {}
+    accountId: '<AWS_ACCOUNT_ID>'
+    regions:
+    - name: us-west-2
+    - name: us-east-1
+    assumeRole: role/spinEC2Managed
+  primaryAccount: mylambda
+  bakeryDefaults:
+    baseImages: []
+    awsAccessKey: ${access-key}
+    awsSecretKey: ${secret-key}
+  accessKeyId: ${opsmx.access-key}
+  secretAccessKey: ${opsmx.secret-key}
+  defaultKeyPairTemplate: '{{name}}-keypair'
+  defaultRegions:
+  - name: us-east-1
+  - name: us-east-2
+  defaults:
+    iamRole: BaseIAMRole
+ecs:
+  enabled: true
+  accounts:
+  - name: my-ecs-account
+    requiredGroupMembership: []
+    providerVersion: V1
+    permissions: {}
+    awsAccount: my-aws-ec2-account
+  primaryAccount: my-ecs-account
+kubernetes:
+  enabled: true
+  accounts:
+  - name: k8stest1
+    requiredGroupMembership: []
+    providerVersion: V2
+    permissions: {}
+    dockerRegistries: []
+    configureImagePullSecrets: true
+    cacheThreads: 1
+    namespaces: []
+    omitNamespaces: []
+    kinds: []
+    omitKinds: []
+    customResources: []
+    cachingPolicies: []
+    kubeconfigFile: configserver:kubecfgsDir/k8s_config1.cfg
+    liveManifestCalls: true
+    oAuthScopes: []
+    onlySpinnakerManaged: false
+  - name: k8stest2
+    requiredGroupMembership: []
+    providerVersion: V2
+    permissions: {}
+    dockerRegistries: []
+    configureImagePullSecrets: true
+    cacheThreads: 1
+    namespaces: []
+    omitNamespaces: []
+    kinds: []
+    omitKinds: []
+    customResources: []
+    cachingPolicies: []
+    kubeconfigFile: configserver:kubecfgsDir/k8s_config2.cfg
+    liveManifestCalls: true
+    oAuthScopes: []
+    onlySpinnakerManaged: false

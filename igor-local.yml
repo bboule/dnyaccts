@@ -1,0 +1,5 @@
+jenkins:
+  ## Use the encryption key used in gitops-hal-sample repo under
+  ## default/profiles/spinnakerconfig.yaml
+  username: '{cipher}<ENCRYPTED_JENKINS_USERNAME>'
+  password: '{cipher}<ENCRYPTED_JENKINS_PASSWORD>'
